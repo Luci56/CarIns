@@ -19,4 +19,8 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
     boolean existsActiveOnDate(@Param("carId") Long carId, @Param("date") LocalDate date);
 
     List<InsurancePolicy> findByCarId(Long carId);
+
+    // Gaseste toate politicile pentru o masina, ordonate dupa startDate
+    List<InsurancePolicy> findByCarIdOrderByStartDateAsc(Long carId);
+
 }

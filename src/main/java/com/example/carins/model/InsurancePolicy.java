@@ -20,7 +20,7 @@ public class InsurancePolicy {
 
     //ne asiguram ca toate asigurarile au un end date cerinta 1
     @NotNull(message = "End date is Required") //validare la APi cu mesaj daca se incearca crearea fara end date a unei asigurari
-    @Column( nullable = false) //validare si pentru baza de date
+    //@Column( nullable = false) //validare si pentru baza de date
     private LocalDate endDate; // nullable == open-ended
 
     public InsurancePolicy() {}
