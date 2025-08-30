@@ -24,7 +24,6 @@ public class InsurancePolicyMapper {
     // Convertim DTO-ul în entitate
     public InsurancePolicy toEntity(InsurancePolicyDto dto, com.example.carins.model.Car car) {
         InsurancePolicy policy = new InsurancePolicy();
-        policy.setId(dto.id());
         policy.setCar(car);
         policy.setProvider(dto.provider());
         policy.setStartDate(dto.startDate());

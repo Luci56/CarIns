@@ -3,6 +3,7 @@ package com.example.carins.service;
 import com.example.carins.model.Car;
 import com.example.carins.repo.CarRepository;
 import com.example.carins.repo.InsurancePolicyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 public class CarService {
 
-    private final CarRepository carRepository;
+    @Autowired private final CarRepository carRepository;
     private final InsurancePolicyRepository policyRepository;
 
     public CarService(CarRepository carRepository, InsurancePolicyRepository policyRepository) {

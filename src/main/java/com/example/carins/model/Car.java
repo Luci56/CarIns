@@ -20,6 +20,10 @@ public class Car {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Owner owner;
 
+    public Car(){
+
+    }
+
     public Car(String vin, String make, String model, int yearOfManufacture, Owner owner) {
         this.vin = vin; this.make = make; this.model = model; this.yearOfManufacture = yearOfManufacture; this.owner = owner;
     }

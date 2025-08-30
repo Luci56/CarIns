@@ -7,7 +7,8 @@ import jakarta.validation.constraints.NotNull; //import pentru validare la API @
 @Entity
 @Table(name = "insurancepolicy")
 public class InsurancePolicy {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -16,11 +17,14 @@ public class InsurancePolicy {
     private String provider;
 
 
+    @NotNull(message = "Start date is required")
+    @Column(nullable = false)
     private LocalDate startDate;
+
 
     //ne asiguram ca toate asigurarile au un end date cerinta 1
     @NotNull(message = "End date is Required") //validare la APi cu mesaj daca se incearca crearea fara end date a unei asigurari
-    //@Column( nullable = false) //validare si pentru baza de date
+    @Column( nullable = false) //validare si pentru baza de date
     private LocalDate endDate; // nullable == open-ended
 
     public InsurancePolicy() {}

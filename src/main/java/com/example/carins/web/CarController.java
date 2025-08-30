@@ -3,6 +3,7 @@ package com.example.carins.web;
 import com.example.carins.model.Car;
 import com.example.carins.service.CarService;
 import com.example.carins.web.dto.CarDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class CarController {
 
-    private final CarService service;
+    @Autowired private final CarService service;
 
     public CarController(CarService service) {
         this.service = service;

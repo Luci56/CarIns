@@ -6,6 +6,7 @@ import com.example.carins.model.InsurancePolicy;
 import com.example.carins.repo.CarRepository;
 import com.example.carins.repo.InsurancePolicyRepository;
 import com.example.carins.web.dto.InsurancePolicyDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -37,6 +38,10 @@ public class InsurancePolicyService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End date is required");
         }
 
+        if (dto.startDate() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Start date is required");
+        }
+
         //Gasim masina al carei asigurare este asigurarea data
         Car car = carRepository.findById(dto.carId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
@@ -53,6 +58,7 @@ public class InsurancePolicyService {
         if(dto.endDate() == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"End date is required");
         }
+
 
         //preluam asigurarea existenta dupa id care ni se da ca si parametru
         InsurancePolicy existing = policyRepository.findById(policyId)

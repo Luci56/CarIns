@@ -2,6 +2,7 @@ package com.example.carins.web;
 
 import com.example.carins.service.InsurancePolicyService;
 import com.example.carins.web.dto.InsurancePolicyDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/insurance") //toate endpointurile vor incepe asa
 public class insurancePolicyController {
 
-    private final InsurancePolicyService service;
+    @Autowired private final InsurancePolicyService service;
 
     public insurancePolicyController(InsurancePolicyService service) {
         this.service = service;
