@@ -6,6 +6,8 @@ import com.example.carins.model.InsurancePolicy;
 import com.example.carins.repo.CarRepository;
 import com.example.carins.repo.InsurancePolicyRepository;
 import com.example.carins.web.dto.InsurancePolicyDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class InsurancePolicyService {
 
     //Clasa creata pentru a separa logica de business de restul
 
+    private static final Logger log = LoggerFactory.getLogger(InsurancePolicyService.class);
     private final InsurancePolicyRepository policyRepository;
     private final CarRepository carRepository;
     private final InsurancePolicyMapper mapper;
@@ -46,6 +49,8 @@ public class InsurancePolicyService {
         Car car = carRepository.findById(dto.carId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
 
+        log.info("Saving policy: car={}, provider={}, start={}, end={}",
+                car.getId(), dto.provider(), dto.startDate(), dto.endDate());
         //returnam asigurarea valida cu end date
         InsurancePolicy saved = policyRepository.save(mapper.toEntity(dto, car));
         return mapper.toDto(saved);

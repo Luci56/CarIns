@@ -27,7 +27,9 @@ public class InsurancePolicy {
     @Column( nullable = false) //validare si pentru baza de date
     private LocalDate endDate; // nullable == open-ended
 
-    public InsurancePolicy() {}
+    public InsurancePolicy() {
+
+    }
     public InsurancePolicy(Car car, String provider, LocalDate startDate, LocalDate endDate) {
         this.car = car; this.provider = provider; this.startDate = startDate; this.endDate = endDate;
     }

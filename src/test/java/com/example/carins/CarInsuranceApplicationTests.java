@@ -67,12 +67,13 @@ class CarInsuranceApplicationTests {
     //teste pentru verificarea asigurarii
     @Test
     void testValidInsurance() {
-        // Car ID 1 are asigurarea între 2024-01-01 și 2024-12-31 și 2025-01-01 - 2025-12-31
+        // Car ID 1, data în intervalul primei polițe
         boolean valid1 = carService.isInsuranceValid(1L, "2024-06-01");
+        // Car ID 1, data în intervalul celei de-a doua polițe
         boolean valid2 = carService.isInsuranceValid(1L, "2025-06-01");
 
-        assertTrue(valid1, "Asigurarea din 2024 ar trebui sa fie valida");
-        assertTrue(valid2, "Asigurarea din 2025 ar trebui sa fie valida");
+        assertTrue(valid1, "Polița din 2024 ar trebui să fie validă");
+        assertTrue(valid2, "Polița din 2025 ar trebui să fie validă");
     }
 
     @Test

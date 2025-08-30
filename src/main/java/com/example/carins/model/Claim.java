@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 //Entitate pentru a doua cerinta pentru a inregistra o colecatre de asigurare
 @Entity
+@Table(name = "claim")//punem tabel in baza de date ca e entitate
 public class Claim {
 
     @Id
@@ -33,6 +34,17 @@ public class Claim {
     @NotNull(message = "Amount cannot be null")
     @Positive(message = "Amount must be positive")
     private BigDecimal amount;
+
+    public Claim(){
+
+    }
+
+    public Claim(Car car, LocalDate claimDate, String description, BigDecimal amount) {
+        this.car = car;
+        this.claimDate = claimDate;
+        this.description = description;
+        this.amount = amount;
+    }
 
     public @NotNull(message = "Amount cannot be null") @Positive(message = "Amount must be positive") BigDecimal getAmount() {
         return amount;
