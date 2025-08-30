@@ -2,7 +2,6 @@ package com.example.carins.service;
 
 import com.example.carins.model.InsurancePolicy;
 import com.example.carins.repo.InsurancePolicyRepository;
-import org.jetbrains.annotations.Async;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-
-public class PolicyExpireLogger {
+//clasa creata pentru a rezolva taskul 4 cu cron
+public class PolicyExpireService {
     private final InsurancePolicyRepository policyRepository;
 
     //folosim final pentru evita reinstantierea lang tine id urile asigurariilor si booleanul verifica daca i a fost anuntata saui nu expirarea
@@ -23,14 +22,14 @@ public class PolicyExpireLogger {
     private final Map<Long, Boolean> loggedPolicies = new HashMap<>();
 
     //loger pentru a afisa mesaje in consola
-    private static final Logger log = LoggerFactory.getLogger(PolicyExpireLogger.class);
+    private static final Logger log = LoggerFactory.getLogger(PolicyExpireService.class);
 
-    public PolicyExpireLogger(InsurancePolicyRepository policyRepository) {
+    public PolicyExpireService(InsurancePolicyRepository policyRepository) {
         this.policyRepository = policyRepository;
     }
 
     //aici afcem cronul care verifica din 5 in 5 minute asigurarile expirate
-    @Scheduled(fixedRate = 5 * 60 * 1000)
+    @Scheduled(fixedRate = 30000)
     public void logRecentlyExpiredPolicies() {
 
         //data de azi

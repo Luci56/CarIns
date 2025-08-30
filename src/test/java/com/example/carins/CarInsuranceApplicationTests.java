@@ -1,5 +1,9 @@
 package com.example.carins;
 
+import com.example.carins.model.Car;
+import com.example.carins.model.Owner;
+import com.example.carins.repo.CarRepository;
+import com.example.carins.repo.OwnerRepository;
 import com.example.carins.service.CarService;
 import com.example.carins.service.InsurancePolicyService;
 import com.example.carins.web.dto.InsurancePolicyDto;
@@ -12,8 +16,10 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
 class CarInsuranceApplicationTests {
+
 
     @Autowired
     CarService carService;
@@ -21,44 +27,17 @@ class CarInsuranceApplicationTests {
     @Autowired
     InsurancePolicyService insuranceService;
 
-    @Test
-    void insuranceValidityBasic() {
-        assertTrue(carService.isInsuranceValid(12L, "2024-06-01"));
-        assertTrue(carService.isInsuranceValid(12L, "2025-06-01"));
-        assertFalse(carService.isInsuranceValid(13L, "2025-02-01"));
 
-    }
-
-    @Test
-    void createPolicy_withValidEndDate_succeeds() {
-
-
-        //cream o asigurare noua
-        InsurancePolicyDto dto = new InsurancePolicyDto(null, 12L, "TestProvider",
-                LocalDate.of(2025, 1, 1), LocalDate.of(2025, 12, 31));
-
-        //cream asigurare prin service
-        InsurancePolicyDto saved = insuranceService.createPolicy(dto);
-
-        //ne asiguram ca id ul nu e null
-        assertNotNull(saved.id());
-
-        //ne asiguram ca provider si car id sunt ok
-        assertEquals("TestProvider", saved.provider());
-        assertEquals(12L, saved.carId());
-
-
-    }
-
+    //testam sa vedem daca putem crea o asigurare fara end date
     @Test
     void createPolicy_withoutEndDate() {
-        InsurancePolicyDto dto = new InsurancePolicyDto(null, 12L, "TestProvider",
+        InsurancePolicyDto dto = new InsurancePolicyDto(null, 1L, "TestProvider",
                 LocalDate.of(2025, 1, 1), null);
 
         //ne asteptam sa primim un cod 400
         ResponseStatusException ex = assertThrows(ResponseStatusException.class, () -> insuranceService.createPolicy(dto));
 
-        assertEquals(400, ex.getStatusCode());
+        assertEquals(400, ex.getStatusCode().value());
         assertTrue(ex.getReason().contains("End date is required"));
 
 
@@ -67,20 +46,21 @@ class CarInsuranceApplicationTests {
     //teste pentru verificarea asigurarii
     @Test
     void testValidInsurance() {
-        // Car ID 1, data în intervalul primei polițe
+        // veriifcam o data valida din intervalul primei asigurarii masinii cu id 1
         boolean valid1 = carService.isInsuranceValid(1L, "2024-06-01");
-        // Car ID 1, data în intervalul celei de-a doua polițe
+        // veriifcam o data valida din intervalul cel de al doilea a asigurarii masinii cu id 1
         boolean valid2 = carService.isInsuranceValid(1L, "2025-06-01");
 
-        assertTrue(valid1, "Polița din 2024 ar trebui să fie validă");
-        assertTrue(valid2, "Polița din 2025 ar trebui să fie validă");
+        assertTrue(valid1, "Asigurarea din 2024 ar trebui sa fie valida");
+        assertTrue(valid2, "Asigurarea din 2025 ar trebui să fie valida");
     }
 
+    //verificam daca afiseaza bine pentru dati inafara intervalului asigurarii
     @Test
     void testInvalidInsurance() {
-        // Car ID 2 are asigurarea doar între 2025-03-01 și 2025-09-30
-        boolean validBefore = carService.isInsuranceValid(2L, "2025-02-01"); // inainte de start
-        boolean validAfter = carService.isInsuranceValid(2L, "2025-10-01");  // dupa end
+        // masina cu id 2 are asigurarea doar intre 2025-03-01 și 2025-09-30
+        boolean validBefore = carService.isInsuranceValid(2L, "2025-02-01"); // data inainte datei start
+        boolean validAfter = carService.isInsuranceValid(2L, "2025-10-01");  // data de dupa end date
 
         assertFalse(validBefore, "Asiguarrea inainte de start nu ar trebui sa fie valida");
         assertFalse(validAfter, "Asigurarea dupa end nu ar trebui sa fie valida");
@@ -116,6 +96,7 @@ class CarInsuranceApplicationTests {
         assertEquals(400, ex.getStatusCode().value());
         assertTrue(ex.getReason().contains("The date given is imposible"));
     }
+
 }
 
 

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class ClaimService {
 
@@ -36,4 +38,10 @@ public class ClaimService {
         // Salvam in baza de date
         return claimRepository.save(claim);
     }
+
+    //folosim pentru get claimss
+    public List<Claim> getClaimsForCar(Long carId) {
+        return claimRepository.findByCarId(carId);
+    }
+
 }

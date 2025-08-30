@@ -9,5 +9,8 @@ import java.util.List;
 @Repository
 public interface ClaimRepository extends JpaRepository<Claim, Long> {
 
+    //meotda folosita la istoricul masinii pentru a gasi claim uril in ordine
     List<Claim> findByCarIdOrderByClaimDateAsc(Long carId);
+    //metoda folosita la get claims
+    List<Claim> findByCarId(Long carId);
 }
