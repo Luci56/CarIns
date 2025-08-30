@@ -17,7 +17,7 @@ import java.util.Map;
 public class PolicyExpireService {
     private final InsurancePolicyRepository policyRepository;
 
-    //folosim final pentru evita reinstantierea lang tine id urile asigurariilor si booleanul verifica daca i a fost anuntata saui nu expirarea
+    //folosim final pentru evita reinstantierea long tine id urile asigurariilor si booleanul verifica daca i a fost anuntata saui nu expirarea
     // practic pentru a evita afisarea aceluiasi mesaj pentru aceasi asigurare de mai multe ori
     private final Map<Long, Boolean> loggedPolicies = new HashMap<>();
 
@@ -28,7 +28,7 @@ public class PolicyExpireService {
         this.policyRepository = policyRepository;
     }
 
-    //aici afcem cronul care verifica din 5 in 5 minute asigurarile expirate
+    //aici afcem cronul care verifica din 30 in 30 secunde asigurarile expirate
     @Scheduled(fixedRate = 30000)
     public void logRecentlyExpiredPolicies() {
 
@@ -42,14 +42,14 @@ public class PolicyExpireService {
 
             LocalDate endDate = policy.getEndDate();
             //verificam daca asigurarea expira azi sau a expirat ieri
-            boolean isRecentlyExpired = endDate.isEqual(now) || endDate.isEqual(now.minusDays(1));
+            boolean isRecentlyExpired = endDate.isEqual(now) || endDate.isEqual(now.plusDays(1));
             //daca a expirat recent si nu a fost dat mesajul deja
-            if (isRecentlyExpired && loggedPolicies.containsKey(policy.getId())) {
+            if (isRecentlyExpired && !loggedPolicies.containsKey(policy.getId())) {
 
                 //afisam mesajul o singura data
                 log.info("Policy {} for car {} expired on {}", policy.getId(), policy.getCar().getId(), endDate);
 
-                //punem in map ca si cum a fost anuntata
+                //punem in map ca si cum s a dat logul pentru ea
                 loggedPolicies.put(policy.getId(), true);
 
             }

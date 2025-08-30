@@ -100,7 +100,7 @@ public class InsurancePolicyService {
         return policyRepository.existsActiveOnDate(carID,date);
     }
 
-    //cautam asigurarile fara end date si incercam sa punem un an in plus
+    //cautam asigurarile fara end date si incercam sa punem un an in plus pt cerinta 1
     public void fixOpenEndedPolicies() {
 
         //salvam intr o lista toate asigurarile fara end date

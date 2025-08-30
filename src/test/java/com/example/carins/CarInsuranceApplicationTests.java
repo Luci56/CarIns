@@ -1,9 +1,6 @@
 package com.example.carins;
 
-import com.example.carins.model.Car;
-import com.example.carins.model.Owner;
-import com.example.carins.repo.CarRepository;
-import com.example.carins.repo.OwnerRepository;
+
 import com.example.carins.service.CarService;
 import com.example.carins.service.InsurancePolicyService;
 import com.example.carins.web.dto.InsurancePolicyDto;
@@ -26,6 +23,19 @@ class CarInsuranceApplicationTests {
 
     @Autowired
     InsurancePolicyService insuranceService;
+
+    //test in care cream o polita normala
+    @Test
+    void createPolicy_withValidEndDate_succeeds() {
+        InsurancePolicyDto dto = new InsurancePolicyDto(null, 1L, "NewProvider", LocalDate.of(2025, 7, 1), LocalDate.of(2026, 6, 30));
+
+        InsurancePolicyDto saved = insuranceService.createPolicy(dto);
+
+        //verificam daca id ul nu e null si daca s a salvat provider  si car id asa ne dam seama ca s a creat
+        assertNotNull(saved.id(), "ID nu trebuie sa fie null");
+        assertEquals("NewProvider", saved.provider());
+        assertEquals(1L, saved.carId());
+    }
 
 
     //testam sa vedem daca putem crea o asigurare fara end date
