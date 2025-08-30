@@ -57,21 +57,21 @@ public class InsurancePolicyService {
     }
 
     //dam update la o polita noua cu validare de end date
-    public InsurancePolicyDto updatePolicy(Long policyId,InsurancePolicyDto dto){
+    public InsurancePolicyDto updatePolicy(Long policyId, InsurancePolicyDto dto) {
 
 
-        if(dto.endDate() == null){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"End date is required");
+        if (dto.endDate() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End date is required");
         }
 
 
         //preluam asigurarea existenta dupa id care ni se da ca si parametru
         InsurancePolicy existing = policyRepository.findById(policyId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Insurance wasn t found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Insurance wasn t found"));
 
         //preluam masina a carei asigurare este
         Car car = carRepository.findById(dto.carId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Car wasn t found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car wasn t found"));
 
 
         existing.setCar(car);
@@ -86,7 +86,7 @@ public class InsurancePolicyService {
     }
 
     //listam asigurarile
-    public List<InsurancePolicyDto> listPolices(){
+    public List<InsurancePolicyDto> listPolices() {
         List<InsurancePolicyDto> result = policyRepository.findAll().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
@@ -94,10 +94,10 @@ public class InsurancePolicyService {
     }
 
     //verificam daca o masina are asigurarea valida la o anumita data
-    public boolean isInsuranceValid(Long carID, LocalDate date){
-        if(carID == null || date == null)
+    public boolean isInsuranceValid(Long carID, LocalDate date) {
+        if (carID == null || date == null)
             return false;
-        return policyRepository.existsActiveOnDate(carID,date);
+        return policyRepository.existsActiveOnDate(carID, date);
     }
 
     //cautam asigurarile fara end date si incercam sa punem un an in plus pt cerinta 1
@@ -109,9 +109,9 @@ public class InsurancePolicyService {
                 .collect(Collectors.toList());
 
         //la fiecare asigurare fara end date adaugam un an in plus incepand de la start date
-        for(InsurancePolicy policy : policiesEndDateNull){
-                policy.setEndDate(policy.getStartDate().plusYears(1));
-                policyRepository.save(policy);
+        for (InsurancePolicy policy : policiesEndDateNull) {
+            policy.setEndDate(policy.getStartDate().plusYears(1));
+            policyRepository.save(policy);
         }
 
 

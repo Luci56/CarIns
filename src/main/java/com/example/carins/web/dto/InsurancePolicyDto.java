@@ -1,7 +1,6 @@
 package com.example.carins.web.dto;
 
 
-
 import java.time.LocalDate;
 
 // Am creat acest record DTO pentru a transmite datele despre asigurare între API și Service
@@ -13,4 +12,5 @@ public record InsurancePolicyDto(
         String provider,
         LocalDate startDate,
         LocalDate endDate
-) {}
+) {
+}

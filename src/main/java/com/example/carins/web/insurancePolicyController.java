@@ -12,7 +12,8 @@ import java.util.List;
 @RequestMapping("/api/insurance") //toate endpointurile vor incepe asa
 public class insurancePolicyController {
 
-    @Autowired private final InsurancePolicyService service;
+    @Autowired
+    private final InsurancePolicyService service;
 
     public insurancePolicyController(InsurancePolicyService service) {
         this.service = service;
@@ -28,7 +29,7 @@ public class insurancePolicyController {
     //se valideaza obligatoriu end date retureaza err 400 bad request daca nu e
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public InsurancePolicyDto createPolicy(@RequestBody InsurancePolicyDto dto){
+    public InsurancePolicyDto createPolicy(@RequestBody InsurancePolicyDto dto) {
         return service.createPolicy(dto);
     }
 
@@ -36,7 +37,7 @@ public class insurancePolicyController {
     @PutMapping("/{id}")
     public InsurancePolicyDto updatePolicy(@PathVariable Long id, @RequestBody InsurancePolicyDto dto) {
         dto = new InsurancePolicyDto(id, dto.carId(), dto.provider(), dto.startDate(), dto.endDate());
-        return service.updatePolicy(id,dto);
+        return service.updatePolicy(id, dto);
     }
 
 

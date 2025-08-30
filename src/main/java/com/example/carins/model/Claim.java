@@ -21,7 +21,9 @@ public class Claim {
     // Relatie ManyToOne cu Car un claim apartine unei masini
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)
-    @JsonIgnore // Evitam serializarea lui car pentru JSON, deoarece Claim are un Car,iar Car are un Owner si ar putea cauza erori de serializare Lazy proxies
+    @JsonIgnore
+    // Evitam serializarea lui car pentru JSON, deoarece Claim are un Car
+    // iar Car are un Owner si ar putea cauza erori de serializare Lazy proxies
     private Car car;
 
     // Data evenimentului pentru care se face claim
@@ -37,7 +39,7 @@ public class Claim {
     @Positive(message = "Amount must be positive")
     private BigDecimal amount;
 
-    public Claim(){
+    public Claim() {
 
     }
 

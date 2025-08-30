@@ -4,9 +4,9 @@ import java.time.LocalDate;
 
 //am creat acest dto pentru a rezolva cerinta 3 si anume sa putem apela GET /api/cars/{carId}/insurance-valid` sa vedem daca asigurarea unei masini este valabila sau nu
 public class InsuranceValidityResponse {
-     private long carID;
-     private LocalDate date;
-     private boolean valid;
+    private long carID;
+    private LocalDate date;
+    private boolean valid;
 
     public InsuranceValidityResponse(long carID, LocalDate date, boolean valid) {
         this.carID = carID;

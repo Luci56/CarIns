@@ -41,7 +41,10 @@ public class InsurancePolicy {
     public void setProvider(String provider) { this.provider = provider; }
     public LocalDate getStartDate() { return startDate; }
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
-    public LocalDate getEndDate() { return endDate; }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 
     public void setId(Long id) {

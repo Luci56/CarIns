@@ -14,7 +14,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class CarController {
 
-    @Autowired private final CarService service;
+    @Autowired
+    private final CarService service;
 
     public CarController(CarService service) {
         this.service = service;
@@ -42,5 +43,6 @@ public class CarController {
                 o != null ? o.getEmail() : null);
     }
 
-    public record InsuranceValidityResponse(Long carId, String date, boolean valid) {}
+    public record InsuranceValidityResponse(Long carId, String date, boolean valid) {
+    }
 }
