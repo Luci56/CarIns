@@ -20,10 +20,10 @@ public class CarHistoryController {
         this.historyService = historyService;
     }
 
-    // Endpoint GET pentru istoricul masinii practic apel;ez meotda din service
+    // Endpoint GET pentru istoricul masinii practic apelez meotda din service
     @GetMapping("/{carId}/history")
     public ResponseEntity<List<CarHistoryDto>> getCarHistory(@PathVariable Long carId) {
-        // Apelez service-ul pentru a obtine istoricul
+        // Apelez service ul pentru a obtine istoricul
         List<CarHistoryDto> history = historyService.getCarHistory(carId);
 
         // Returnez lista cu status 200 OK
