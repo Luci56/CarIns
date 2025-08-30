@@ -32,7 +32,7 @@ public class PolicyExpireService {
     @Scheduled(fixedRate = 30000)
     public void logRecentlyExpiredPolicies() {
 
-        //data de azi
+
         LocalDate now = LocalDate.now();
 
         //preluam toate asigurarile
@@ -41,6 +41,7 @@ public class PolicyExpireService {
         for (InsurancePolicy policy : policies) {
 
             LocalDate endDate = policy.getEndDate();
+
             //verificam daca asigurarea expira azi sau a expirat ieri
             boolean isRecentlyExpired = endDate.isEqual(now) || endDate.isEqual(now.plusDays(1));
             //daca a expirat recent si nu a fost dat mesajul deja
